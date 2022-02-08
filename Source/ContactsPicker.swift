@@ -155,7 +155,7 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         self.view = tableView
     }
     
-    override open func viewDidLoad() {
+  override open func viewDidLoad() {
         super.viewDidLoad()
         self.title = GlobalConstants.Strings.contactsTitle
         
@@ -163,6 +163,8 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         initializeBarButtons()
         setUpSearchBar()
         reloadContacts()
+      
+      registerKeyboardNotifications()
     }
     
     func setUpSearchBar() {
@@ -199,7 +201,15 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
             tableView.register(cellNib, forCellReuseIdentifier: "Cell")
         }
     }
+  
     
+    fileprivate func registerKeyboardNotifications() {
+      registerForKeyboardWillShowNotification(tableView)
+      registerForKeyboardWillHideNotification(tableView)
+      
+      registerForKeyboardWillShowNotification(tableView)
+      registerForKeyboardWillHideNotification(tableView)
+    }
     // MARK: - Contact Operations
     
     open func reloadContacts() {
