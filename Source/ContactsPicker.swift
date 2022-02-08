@@ -118,6 +118,9 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         return tableView
     }()
     
+    private var willShowKeyboardToken: NSObjectProtocol?
+    private var willHideKeyboardToken: NSObjectProtocol?
+  
     // MARK: - Initializers
     
     /// The designated initializer.
@@ -147,6 +150,16 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         self.shouldShowIndexBar = true
         
         super.init(coder: aDecoder)
+    }
+  
+    deinit {
+      let center = NotificationCenter.default
+      if let willShowKeyboardToken = willShowKeyboardToken {
+        center.removeObserver(willShowKeyboardToken)
+      }
+      if let willHideKeyboardToken = willHideKeyboardToken {
+        center.removeObserver(willHideKeyboardToken)
+      }
     }
     
     // MARK: - Lifecycle Methods
@@ -202,10 +215,9 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
   
-    
     fileprivate func registerKeyboardNotifications() {
-      registerForKeyboardWillShowNotification(tableView)
-      registerForKeyboardWillHideNotification(tableView)
+      willShowKeyboardToken = registerForKeyboardWillShow(tableView)
+      willHideKeyboardToken = registerForKeyboardWillHide(tableView)
     }
     // MARK: - Contact Operations
     
@@ -342,7 +354,7 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         
         guard let letter = firstCharacter else { return nil }
         let firstLetter = String(letter)
-        return firstLetter.containsAlphabets() ? firstLetter : nil    
+        return firstLetter.containsAlphabets() ? firstLetter : nil
     }
     
     func allowedContactKeys() -> [CNKeyDescriptor]{
