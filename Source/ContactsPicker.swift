@@ -164,7 +164,7 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
         setUpSearchBar()
         reloadContacts()
       
-      registerKeyboardNotifications()
+        registerKeyboardNotifications()
     }
     
     func setUpSearchBar() {
@@ -204,9 +204,6 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
   
     
     fileprivate func registerKeyboardNotifications() {
-      registerForKeyboardWillShowNotification(tableView)
-      registerForKeyboardWillHideNotification(tableView)
-      
       registerForKeyboardWillShowNotification(tableView)
       registerForKeyboardWillHideNotification(tableView)
     }
