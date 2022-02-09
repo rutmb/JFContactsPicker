@@ -437,6 +437,8 @@ open class ContactsPicker: UIViewController, UITableViewDelegate, UITableViewDat
             if searchBar.isFirstResponder { searchBar.resignFirstResponder() }
             self.contactDelegate?.contactPicker(self, didSelectContact: selectedContact)
         }
+      
+      onTouchDoneButton()
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
